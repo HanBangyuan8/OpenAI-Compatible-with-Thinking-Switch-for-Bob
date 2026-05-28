@@ -1,6 +1,6 @@
 {
   "identifier": "com.hanbangyuan.bob.openai.compatible.translate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "category": "translate",
   "name": "OpenAI Compatible Translate",
   "summary": "OpenAI-compatible translator for Bob with optional thinking control",
@@ -103,6 +103,23 @@
         }
       ],
       "desc": "Controls whether the request body includes a thinking field."
+    },
+    {
+      "identifier": "streamingMode",
+      "type": "menu",
+      "title": "Streaming",
+      "defaultValue": "off",
+      "menuValues": [
+        {
+          "title": "Off",
+          "value": "off"
+        },
+        {
+          "title": "On",
+          "value": "on"
+        }
+      ],
+      "desc": "Optionally enables streaming responses. If Bob or the provider does not support streaming, turn this off."
     },
     {
       "identifier": "maxTokens",

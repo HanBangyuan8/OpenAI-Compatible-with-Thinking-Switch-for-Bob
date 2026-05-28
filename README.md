@@ -15,6 +15,7 @@ A Bob translation plugin for OpenAI-compatible Chat Completions APIs with option
 - Custom Base URL and model
 - Configurable auth header: `Authorization: Bearer`, raw `Authorization`, `api-key`, `x-api-key`, or custom header name
 - Optional `thinking` field: do not send, disabled, or enabled
+- Optional streaming responses with automatic fallback to non-streaming mode
 - Configurable output token parameter: `max_completion_tokens`, `max_tokens`, both, or omitted
 - Custom system prompt
 - Extra Body JSON for provider-specific request fields
@@ -38,6 +39,7 @@ Base URL: https://api.openai.com/v1
 Model: gpt-4o-mini
 Auth Header: Authorization: Bearer
 Thinking: Do not send
+Streaming: Off
 Max Tokens Param: max_completion_tokens
 Temperature: 0.2
 Top P: 0.95
@@ -59,7 +61,7 @@ python3 -m json.tool src/info.json
 
 ```bash
 ./scripts/package-plugin.sh
-open dist/openai-compatible-translate-1.0.0.bobplugin
+open dist/openai-compatible-translate-1.0.1.bobplugin
 ```
 
 ## Release

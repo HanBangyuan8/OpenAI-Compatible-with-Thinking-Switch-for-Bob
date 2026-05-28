@@ -173,6 +173,16 @@ function translate(query, completion) {
     return;
   }
 
+  if (shouldUseStreaming(query)) {
+    translateStreaming(query, done, baseURL, apiKey, body, from, to);
+  } else {
+    translateNonStreaming(query, done, baseURL, apiKey, body, from, to);
+  }
+}
+
+function translateNonStreaming(query, done, baseURL, apiKey, body, from, to) {
+  body.stream = false;
+
   $http.request({
     method: "POST",
     url: buildChatCompletionsURL(baseURL),
@@ -208,6 +218,65 @@ function translate(query, completion) {
           from: from,
           to: to,
           toParagraphs: splitParagraphs(translated)
+        }
+      });
+    }
+  });
+}
+
+function translateStreaming(query, done, baseURL, apiKey, body, from, to) {
+  var state = {
+    buffer: "",
+    text: "",
+    error: null
+  };
+
+  body.stream = true;
+
+  $http.streamRequest({
+    method: "POST",
+    url: buildChatCompletionsURL(baseURL),
+    header: buildHeaders(apiKey),
+    body: body,
+    timeout: 120,
+    cancelSignal: query.cancelSignal,
+    streamHandler: function(stream) {
+      processStreamText(stream.text || "", state, query, from, to);
+    },
+    handler: function(resp) {
+      processStreamText("\n", state, query, from, to);
+
+      if (hasHTTPError(resp)) {
+        if (state.text) {
+          done({
+            result: {
+              from: from,
+              to: to,
+              toParagraphs: splitParagraphs(state.text)
+            }
+          });
+          return;
+        }
+
+        fail(done, "api", responseErrorMessage(resp));
+        return;
+      }
+
+      if (state.error && !state.text) {
+        fail(done, "api", state.error);
+        return;
+      }
+
+      if (!state.text) {
+        fail(done, "api", "No translation content found in streaming response.");
+        return;
+      }
+
+      done({
+        result: {
+          from: from,
+          to: to,
+          toParagraphs: splitParagraphs(state.text)
         }
       });
     }
@@ -272,6 +341,83 @@ function buildRequestBody(text, sourceLang, targetLang, maxTokens) {
   }
 
   return body;
+}
+
+function shouldUseStreaming(query) {
+  if (getOptionString("streamingMode", "off") !== "on") {
+    return false;
+  }
+
+  if (!query || typeof query.onStream !== "function") {
+    return false;
+  }
+
+  if (!$http || typeof $http.streamRequest !== "function") {
+    return false;
+  }
+
+  return true;
+}
+
+function processStreamText(text, state, query, from, to) {
+  if (!text) {
+    return;
+  }
+
+  state.buffer += text;
+
+  var lines = state.buffer.split(/\r?\n/);
+  state.buffer = lines.pop() || "";
+
+  for (var i = 0; i < lines.length; i++) {
+    processStreamLine(lines[i], state, query, from, to);
+  }
+}
+
+function processStreamLine(line, state, query, from, to) {
+  line = trim(line);
+
+  if (!line || line.indexOf(":") === 0) {
+    return;
+  }
+
+  if (line.indexOf("data:") !== 0) {
+    return;
+  }
+
+  var payload = trim(line.slice(5));
+  if (!payload) {
+    return;
+  }
+
+  if (payload === "[DONE]") {
+    state.buffer = "";
+    return;
+  }
+
+  try {
+    var data = JSON.parse(payload);
+    if (data.error) {
+      state.error = formatAPIError(data.error);
+      return;
+    }
+
+    var content = extractDeltaContent(data);
+    if (!content) {
+      return;
+    }
+
+    state.text += content;
+    query.onStream({
+      result: {
+        from: from,
+        to: to,
+        toParagraphs: splitParagraphs(state.text)
+      }
+    });
+  } catch (e) {
+    state.error = "Invalid streaming JSON chunk: " + payload;
+  }
 }
 
 function buildUserPrompt(text, sourceLang, targetLang) {
@@ -400,6 +546,30 @@ function extractContent(data) {
 
     if (Object.prototype.toString.call(message.content) === "[object Array]") {
       return joinContentParts(message.content);
+    }
+
+    return "";
+  } catch (e) {
+    return "";
+  }
+}
+
+function extractDeltaContent(data) {
+  try {
+    var choice = data.choices && data.choices[0];
+    var delta = choice && choice.delta;
+    var message = choice && choice.message;
+
+    if (delta && typeof delta.content === "string") {
+      return delta.content;
+    }
+
+    if (delta && Object.prototype.toString.call(delta.content) === "[object Array]") {
+      return joinContentParts(delta.content);
+    }
+
+    if (message && typeof message.content === "string") {
+      return message.content;
     }
 
     return "";

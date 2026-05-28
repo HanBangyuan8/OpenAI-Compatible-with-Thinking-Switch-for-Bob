@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PRODUCT_NAME="openai-compatible-translate"
-VERSION="1.0.0"
+VERSION="1.0.1"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC_DIR="$ROOT_DIR/src"
 DIST_DIR="$ROOT_DIR/dist"
