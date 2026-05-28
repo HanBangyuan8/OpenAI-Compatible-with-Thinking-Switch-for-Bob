@@ -1,0 +1,190 @@
+{
+  "identifier": "com.hanbangyuan.bob.openai.compatible.translate",
+  "version": "1.0.0",
+  "category": "translate",
+  "name": "OpenAI Compatible Translate",
+  "summary": "OpenAI-compatible translator for Bob with optional thinking control",
+  "icon": "124",
+  "author": "Han",
+  "homepage": "https://github.com/HanBangyuan8/OpenAI-Compatible-with-Thinking-Switch-for-Bob",
+  "appcast": "https://raw.githubusercontent.com/HanBangyuan8/OpenAI-Compatible-with-Thinking-Switch-for-Bob/main/appcast.json",
+  "minBobVersion": "1.14.0",
+  "options": [
+    {
+      "identifier": "apiKey",
+      "type": "text",
+      "title": "API Key",
+      "defaultValue": "",
+      "textConfig": {
+        "type": "secure",
+        "placeholderText": "sk-..."
+      },
+      "desc": "API key for an OpenAI-compatible service."
+    },
+    {
+      "identifier": "baseURL",
+      "type": "text",
+      "title": "Base URL",
+      "defaultValue": "https://api.openai.com/v1",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "https://api.example.com/v1"
+      },
+      "desc": "API base URL. You can also paste a full /chat/completions endpoint."
+    },
+    {
+      "identifier": "model",
+      "type": "text",
+      "title": "Model",
+      "defaultValue": "gpt-4o-mini",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "gpt-4o-mini"
+      },
+      "desc": "Model name to call."
+    },
+    {
+      "identifier": "authType",
+      "type": "menu",
+      "title": "Auth Header",
+      "defaultValue": "bearer",
+      "menuValues": [
+        {
+          "title": "Authorization: Bearer",
+          "value": "bearer"
+        },
+        {
+          "title": "Authorization",
+          "value": "authorization"
+        },
+        {
+          "title": "api-key",
+          "value": "api-key"
+        },
+        {
+          "title": "x-api-key",
+          "value": "x-api-key"
+        },
+        {
+          "title": "Custom",
+          "value": "custom"
+        }
+      ],
+      "desc": "Authentication header type."
+    },
+    {
+      "identifier": "customAuthHeader",
+      "type": "text",
+      "title": "Custom Auth Header",
+      "defaultValue": "",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "Authorization"
+      },
+      "desc": "Header name used when Auth Header is set to Custom. The value will be the API key as entered."
+    },
+    {
+      "identifier": "thinkingMode",
+      "type": "menu",
+      "title": "Thinking",
+      "defaultValue": "none",
+      "menuValues": [
+        {
+          "title": "Do not send",
+          "value": "none"
+        },
+        {
+          "title": "Disabled",
+          "value": "disabled"
+        },
+        {
+          "title": "Enabled",
+          "value": "enabled"
+        }
+      ],
+      "desc": "Controls whether the request body includes a thinking field."
+    },
+    {
+      "identifier": "maxTokens",
+      "type": "text",
+      "title": "Max Tokens",
+      "defaultValue": "2048",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "2048"
+      },
+      "desc": "Maximum output token count."
+    },
+    {
+      "identifier": "maxTokensParam",
+      "type": "menu",
+      "title": "Max Tokens Param",
+      "defaultValue": "max_completion_tokens",
+      "menuValues": [
+        {
+          "title": "max_completion_tokens",
+          "value": "max_completion_tokens"
+        },
+        {
+          "title": "max_tokens",
+          "value": "max_tokens"
+        },
+        {
+          "title": "Both",
+          "value": "both"
+        },
+        {
+          "title": "Do not send",
+          "value": "none"
+        }
+      ],
+      "desc": "Different providers use different output token parameter names."
+    },
+    {
+      "identifier": "temperature",
+      "type": "text",
+      "title": "Temperature",
+      "defaultValue": "0.2",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "0.2"
+      },
+      "desc": "Sampling temperature. A lower value is usually better for translation."
+    },
+    {
+      "identifier": "topP",
+      "type": "text",
+      "title": "Top P",
+      "defaultValue": "0.95",
+      "textConfig": {
+        "type": "visible",
+        "placeholderText": "0.95"
+      },
+      "desc": "Nucleus sampling value. Leave empty to omit."
+    },
+    {
+      "identifier": "systemPrompt",
+      "type": "text",
+      "title": "System Prompt",
+      "defaultValue": "You are a precise translation engine used inside Bob, a popup translator. Translate the user's text into the target language. Preserve meaning, tone, formatting, punctuation, line breaks, code blocks, URLs, names, and numbers. Do not summarize. Do not add explanations. Only output the translated text.",
+      "textConfig": {
+        "type": "visible",
+        "height": 96,
+        "placeholderText": "System prompt"
+      },
+      "desc": "System prompt for translation."
+    },
+    {
+      "identifier": "extraBody",
+      "type": "text",
+      "title": "Extra Body JSON",
+      "defaultValue": "{}",
+      "textConfig": {
+        "type": "visible",
+        "height": 96,
+        "placeholderText": "{\"frequency_penalty\":0}"
+      },
+      "desc": "JSON object merged into the request body for provider-specific fields. Core fields such as model, messages, and stream are controlled by the plugin."
+    }
+  ]
+}

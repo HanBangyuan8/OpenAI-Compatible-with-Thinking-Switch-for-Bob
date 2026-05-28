@@ -1,0 +1,13 @@
+{
+  "identifier": "com.hanbangyuan.bob.openai.compatible.translate",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "desc": "Initial release. Add OpenAI-compatible translation, custom Base URL, custom auth header, max token parameter selection, Extra Body JSON, and optional thinking control.",
+      "sha256": "b6371f282b9a2ba96cdc982ea80123c3e55d24e83fde8d61b33b1e775b1d92cf",
+      "url": "https://github.com/HanBangyuan8/OpenAI-Compatible-with-Thinking-Switch-for-Bob/releases/download/v1.0.0/openai-compatible-translate-1.0.0.bobplugin",
+      "minBobVersion": "1.14.0",
+      "timestamp": 1779981350000
+    }
+  ]
+}
