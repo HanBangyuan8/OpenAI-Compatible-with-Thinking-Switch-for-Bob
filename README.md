@@ -14,7 +14,7 @@ A Bob translation plugin for OpenAI-compatible Chat Completions APIs with option
     <img src="https://cdn.ripperhe.com/oss/master/2019/1222/bob-logo.png" alt="Bob" width="128">
   </a>
   <br>
-  <sub>Built for Bob</sub>
+  <strong>Built for Bob</strong>
 </p>
 
 ## Features
