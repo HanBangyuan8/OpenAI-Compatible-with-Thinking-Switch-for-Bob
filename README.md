@@ -9,6 +9,14 @@
 
 A Bob translation plugin for OpenAI-compatible Chat Completions APIs with optional `thinking` control.
 
+<p align="center">
+  <a href="https://bobtranslate.com">
+    <img src="https://cdn.ripperhe.com/oss/master/2019/1222/bob-logo.png" alt="Bob" width="96">
+  </a>
+  <br>
+  <sub>Built for Bob</sub>
+</p>
+
 ## Features
 
 - OpenAI-compatible `/v1/chat/completions` translation
