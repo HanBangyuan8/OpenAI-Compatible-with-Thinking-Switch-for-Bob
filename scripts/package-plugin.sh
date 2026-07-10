@@ -6,7 +6,7 @@ VERSION="1.0.1"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC_DIR="$ROOT_DIR/src"
 DIST_DIR="$ROOT_DIR/dist"
-PLUGIN_PATH="$DIST_DIR/$PRODUCT_NAME-$VERSION.bobplugin"
+PLUGIN_PATH="$DIST_DIR/$PRODUCT_NAME-v$VERSION.bobplugin"
 
 cd "$ROOT_DIR"
 
