@@ -5,7 +5,7 @@
       "version": "1.0.1",
       "desc": "Patch release. Add optional streaming responses for OpenAI-compatible Chat Completions APIs, disabled by default for compatibility.",
       "sha256": "d3d72914ba5bfa75e30d297390f78115d338dfe7a7049e6b1c14f63276303d38",
-      "url": "https://github.com/HanBangyuan8/OpenAI-Compatible-with-Thinking-Switch-for-Bob/releases/download/v1.0.1/openai-compatible-translate-1.0.1.bobplugin",
+      "url": "https://github.com/HanBangyuan8/OpenAI-Compatible-with-Thinking-Switch-for-Bob/releases/download/v1.0.1/OpenAI-Compatible-with-Thinking-Switch-for-Bob-v1.0.1.bobplugin",
       "minBobVersion": "1.14.0",
       "timestamp": 1779986531000
     }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PRODUCT_NAME="openai-compatible-translate"
+PRODUCT_NAME="OpenAI-Compatible-with-Thinking-Switch-for-Bob"
 VERSION="1.0.1"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC_DIR="$ROOT_DIR/src"

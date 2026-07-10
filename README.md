@@ -69,7 +69,7 @@ python3 -m json.tool src/info.json
 
 ```bash
 ./scripts/package-plugin.sh
-open dist/openai-compatible-translate-1.0.1.bobplugin
+open dist/OpenAI-Compatible-with-Thinking-Switch-for-Bob-v1.0.1.bobplugin
 ```
 
 ## Release
